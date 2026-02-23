@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import { Container, Tabs, Tab, Form, Button, Card, Alert, ListGroup, Row, Col, Badge } from 'react-bootstrap';
 
 const UserApp = () => {
@@ -25,7 +25,7 @@ const UserApp = () => {
 
     const fetchZones = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/zones');
+            const res = await api.get('/admin/zones');
             setZones(res.data);
         } catch (error) {
             console.error('Error fetching zones', error);
@@ -34,7 +34,7 @@ const UserApp = () => {
 
     const fetchEmergencyAlerts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/alerts/emergency');
+            const res = await api.get('/user/alerts/emergency');
             setEmergencyAlerts(res.data);
         } catch (error) {
             console.error('Error fetching alerts', error);
@@ -43,7 +43,7 @@ const UserApp = () => {
 
     const fetchTempleInfo = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/temple-info');
+            const res = await api.get('/user/temple-info');
             setTempleInfo(res.data);
         } catch (error) {
             console.error('Error fetching temple info', error);
@@ -52,7 +52,7 @@ const UserApp = () => {
 
     const fetchMedicalInfo = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/medical');
+            const res = await api.get('/user/medical');
             setMedical(res.data);
         } catch (error) {
             console.error('Error fetching medical info', error);
@@ -62,7 +62,7 @@ const UserApp = () => {
     const handleRouteSearch = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.get(`http://localhost:5000/api/user/routes?start=${startPoint}&end=${endPoint}`);
+            const res = await api.get(`/user/routes?start=${startPoint}&end=${endPoint}`);
             setRoutes(res.data);
         } catch (error) {
             console.error('Error fetching routes', error);

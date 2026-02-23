@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import { Card, Button, Badge, Row, Col, Table, Alert } from 'react-bootstrap';
 
 const AdminDashboard = () => {
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
 
     const fetchZones = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/zones');
+            const res = await api.get('/admin/zones');
             setZones(res.data);
         } catch (error) {
             console.error('Error fetching zones:', error);
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
 
     const fetchAlerts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/alerts');
+            const res = await api.get('/admin/alerts');
             setAlerts(res.data);
         } catch (error) {
             console.error('Error fetching alerts:', error);
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
 
     const updateCrowdLevel = async (id, level) => {
         try {
-            await axios.post(`http://localhost:5000/api/admin/zones/${id}/update`, { crowdLevel: level });
+            await api.post(`/admin/zones/${id}/update`, { crowdLevel: level });
             fetchZones();
             fetchAlerts();
         } catch (error) {
