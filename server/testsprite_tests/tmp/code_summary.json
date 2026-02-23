@@ -1,0 +1,291 @@
+{
+    "tech_stack": [
+        "Node.js",
+        "Express",
+        "Prisma",
+        "SQLite"
+    ],
+    "features": [
+        {
+            "name": "Get All Zones",
+            "description": "Retrieve all zones with their crowd levels",
+            "files": [
+                "routes/adminRoutes.js",
+                "controllers/adminController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/admin/zones": {
+                        "get": {
+                            "summary": "Get all zones",
+                            "responses": {
+                                "200": {
+                                    "description": "List of zones",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "zoneName": {
+                                                            "type": "string"
+                                                        },
+                                                        "crowdLevel": {
+                                                            "type": "string"
+                                                        },
+                                                        "lastUpdated": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Update Zone Crowd Level",
+            "description": "Update the crowd level for a specific zone and generate alerts if needed",
+            "files": [
+                "routes/adminRoutes.js",
+                "controllers/adminController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/admin/zones/{id}/update": {
+                        "post": {
+                            "summary": "Update zone crowd level",
+                            "parameters": [
+                                {
+                                    "name": "id",
+                                    "in": "path",
+                                    "required": true,
+                                    "schema": {
+                                        "type": "integer"
+                                    }
+                                }
+                            ],
+                            "requestBody": {
+                                "required": true,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "properties": {
+                                                "crowdLevel": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "Low",
+                                                        "Medium",
+                                                        "High"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {
+                                "200": {
+                                    "description": "Updated zone"
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Get All Alerts",
+            "description": "Retrieve all alerts with zone information",
+            "files": [
+                "routes/adminRoutes.js",
+                "controllers/adminController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/admin/alerts": {
+                        "get": {
+                            "summary": "Get all alerts",
+                            "responses": {
+                                "200": {
+                                    "description": "List of alerts",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "zoneId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "alertType": {
+                                                            "type": "string"
+                                                        },
+                                                        "severity": {
+                                                            "type": "string"
+                                                        },
+                                                        "timestamp": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Get Routes",
+            "description": "Get route suggestions based on start and end points",
+            "files": [
+                "routes/userRoutes.js",
+                "controllers/userController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/user/routes": {
+                        "get": {
+                            "summary": "Get route suggestions",
+                            "parameters": [
+                                {
+                                    "name": "start",
+                                    "in": "query",
+                                    "schema": {
+                                        "type": "string"
+                                    }
+                                },
+                                {
+                                    "name": "end",
+                                    "in": "query",
+                                    "schema": {
+                                        "type": "string"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "List of routes"
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Get Emergency Alerts",
+            "description": "Retrieve critical emergency alerts",
+            "files": [
+                "routes/userRoutes.js",
+                "controllers/userController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/user/alerts/emergency": {
+                        "get": {
+                            "summary": "Get emergency alerts",
+                            "responses": {
+                                "200": {
+                                    "description": "List of critical alerts"
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Get Temple Info",
+            "description": "Retrieve temple information",
+            "files": [
+                "routes/userRoutes.js",
+                "controllers/userController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/user/temple-info": {
+                        "get": {
+                            "summary": "Get temple information",
+                            "responses": {
+                                "200": {
+                                    "description": "Temple information"
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Get Medical Info",
+            "description": "Retrieve medical center information",
+            "files": [
+                "routes/userRoutes.js",
+                "controllers/userController.js"
+            ],
+            "api_doc": {
+                "openapi": "3.0.0",
+                "paths": {
+                    "/api/user/medical": {
+                        "get": {
+                            "summary": "Get medical center information",
+                            "responses": {
+                                "200": {
+                                    "description": "Medical center information"
+                                },
+                                "500": {
+                                    "description": "Server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
